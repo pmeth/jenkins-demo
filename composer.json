@@ -1,11 +1,11 @@
 {
     "name": "root/jenkinsdemo",
     "require-dev": {
-        "phpunit/phpunit": "^6.0",
-        "phpmd/phpmd" : "@stable",
+        "phpunit/phpunit": "*",
+        "phpmd/phpmd" : "*",
         "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*",
-        "phpdocumentor/phpdocumentor": "2.*"
+        "phpdocumentor/phpdocumentor": "*"
     },
     "autoload": {
         "psr-4": {

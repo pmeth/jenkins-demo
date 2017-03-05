@@ -19,25 +19,17 @@ node {
         stage("integration_tests") {
             sh 'vendor/bin/behat'
         }
+
+        stage("artifact_s3") {
+            sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/build-${env.BUILD_NUMBER}.zip"
+        }
     }
 
-    // Create new deployment assets
-    switch (env.BRANCH_NAME) {
-        case "master":
-            stage("codedeploy") {
-                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/production/build-${env.BUILD_NUMBER}.zip"
-                sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=production/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Production"
-            }
-            break
-        case "staging":
-            stage("codedeploy") {
-                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/staging/build-${env.BUILD_NUMBER}.zip"
-                sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=staging/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
-            }
-            break
-        default:
-            // No deployments for other branches
-            break
+    if (env.BRANCH_NAME == 'staging') {
+        stage("deploy_staging") {
+            sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
+
+        }
     }
 
 }

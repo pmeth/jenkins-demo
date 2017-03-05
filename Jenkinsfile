@@ -25,12 +25,12 @@ node {
     switch (env.BRANCH_NAME) {
         case "master":
             stage("codedeploy") {
-                sh "aws deploy push --application-name Jenkins_Demo_Production --s3-location s3://delvia-jenkins-build-artifacts/production/build-${env.BUILD_NUMBER}.zip"
+                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name Jenkins_Demo_Production --s3-location s3://delvia-jenkins-build-artifacts/production/build-${env.BUILD_NUMBER}.zip"
             }
             break
         case "staging":
             stage("codedeploy") {
-                sh "aws deploy push --application-name Jenkins_Demo_Staging --s3-location s3://delvia-jenkins-build-artifacts/staging/build-${env.BUILD_NUMBER}.zip"
+                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name Jenkins_Demo_Staging --s3-location s3://delvia-jenkins-build-artifacts/staging/build-${env.BUILD_NUMBER}.zip"
             }
             break
         default:

@@ -1,7 +1,7 @@
 node {
     stage('preparation') {
         // Checkout the master branch of the Laravel framework repository
-        git branch: 'master', url: 'https://github.com/pmeth/jenkinsdemo.git'
+        git branch: 'master', url: 'https://github.com/pmeth/jenkins-demo.git'
     }
 
     stage("composer_install") {

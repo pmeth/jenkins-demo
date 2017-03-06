@@ -13,6 +13,11 @@ node {
         sh 'vendor/bin/phpunit'
     }
 
+    stage("php_code_sniffer") {
+        // Run PHPCS
+        sh 'vendor/bin/phpcs src'
+    }
+
     // If this is the master or develop branch being built then run
     // some additional integration tests
     if (["master", "staging"].contains(env.BRANCH_NAME)) {

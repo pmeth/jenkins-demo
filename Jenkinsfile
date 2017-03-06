@@ -15,7 +15,7 @@ node {
 
     stage("php_code_sniffer") {
         // Run PHPCS
-        sh 'vendor/bin/phpcs src'
+        sh 'vendor/bin/phpcs -n --standard=PSR2 src'
     }
 
     // If this is the master or develop branch being built then run

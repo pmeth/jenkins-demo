@@ -10,7 +10,7 @@ node {
 
     stage("phpunit") {
         // Run PHPUnit
-        sh 'vendor/bin/phpunit'
+        sh 'vendor/bin/phpunit --configuration phpunit.xml.dist'
     }
 
     stage("php_code_sniffer") {

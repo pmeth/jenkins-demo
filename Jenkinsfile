@@ -37,4 +37,8 @@ node {
         }
     }
 
+    stage("phpunit code coverage") {
+        publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'build/coverage', reportFiles: 'index.html', reportName: 'Code Coverage'])
+    }
+
 }

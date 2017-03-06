@@ -1,7 +1,5 @@
 node {
-    stage('preparation') {
-        git url: 'https://github.com/pmeth/jenkins-demo.git'
-    }
+    checkout scm
 
     stage("composer_install") {
         // Run `composer update` as a shell script

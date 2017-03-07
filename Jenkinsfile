@@ -4,8 +4,10 @@ pipeline {
 
     stages {
         stage("build") {
-            // Run `composer update` as a shell script
-            sh 'composer install'
+            steps {
+                // Run `composer update` as a shell script
+                sh 'composer install'
+            }
         }
 
         stage("test") {
@@ -37,14 +39,18 @@ pipeline {
 
         if (["master", "staging"].contains(env.BRANCH_NAME)) {
             stage("upload artifacts") {
-                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
+                steps {
+                    sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
+                }
             }
         }
 
         if (env.BRANCH_NAME == 'staging') {
             stage("deploy") {
-                sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
+                steps {
+                    sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
 
+                }
             }
         }
     }

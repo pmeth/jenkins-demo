@@ -8,9 +8,10 @@ pipeline {
                 // Run `composer update` as a shell script
                 sh 'composer install'
 
-                if (["master", "staging"].contains(env.BRANCH_NAME)) {
-                    sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
-                }
+
+            when { ["master", "staging"].contains(env.BRANCH_NAME) }
+            {
+                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
             }
         }
 
@@ -24,7 +25,8 @@ pipeline {
 
                 // If this is the master or develop branch being built then run
                 // some additional integration tests
-                if (["master", "staging"].contains(env.BRANCH_NAME)) {
+                when { ["master", "staging"].contains(env.BRANCH_NAME) }
+                {
                     // Run behat
                     sh 'vendor/bin/behat'
                 }
@@ -41,11 +43,10 @@ pipeline {
         }
 
         stage("deploy") {
+            when { env.BRANCH_NAME == 'staging' && currentBuild.result == 'SUCCESS' }
             steps {
-                if (env.BRANCH_NAME == 'staging') {
-                    sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
+                sh "/var/lib/jenkins/.local/bin/aws deploy create-deployment --application-name JenkinsDemo --s3-location bucket=delvia-jenkins-build-artifacts,key=${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip,bundleType=zip --deployment-group-name Staging"
 
-                }
             }
         }
     }

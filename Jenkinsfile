@@ -9,9 +9,10 @@ pipeline {
                 sh 'composer install'
 
 
-            when { ["master", "staging"].contains(env.BRANCH_NAME) }
-            {
-                sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
+                when { ["master", "staging"].contains(env.BRANCH_NAME) }
+                {
+                    sh "/var/lib/jenkins/.local/bin/aws deploy push --application-name JenkinsDemo --s3-location s3://delvia-jenkins-build-artifacts/${env.BRANCH_NAME}/build-${env.BUILD_NUMBER}.zip"
+                }
             }
         }
 

@@ -2,8 +2,6 @@
 pipeline {
     agent any
 
-    checkout scm
-
     stages {
         stage("build") {
             // Run `composer update` as a shell script

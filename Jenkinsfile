@@ -1,5 +1,7 @@
 // vi:syntax=groovy
-node {
+pipeline {
+    agent any
+
     checkout scm
 
     stages {

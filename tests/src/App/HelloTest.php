@@ -14,6 +14,9 @@ class HelloTest extends TestCase
 
     public function testHello()
     {
-        $this->assertEquals('Hello peter', $this->subject->hello('peter'));
+        $this->assertEquals(
+            'Hello mike. Mr. Heckler',
+            $this->subject->hello('peter')
+        );
     }
 }

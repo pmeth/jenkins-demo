@@ -5,4 +5,4 @@ Feature: Hello Page
 
     Scenario: test the hello page
         Given I am on "/"
-        Then I should see "Hello Peter"
+        Then I should see "Hello Mike. Mr. Heckler"

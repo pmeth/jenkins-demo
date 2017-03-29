@@ -6,6 +6,6 @@ class Hello
 {
     public function hello($name)
     {
-        return "Hello mike. Mr. Heckler";
+        return "Hello $name";
     }
 }

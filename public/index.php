@@ -4,9 +4,19 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $hello = new App\Hello();
 
-echo $hello->hello('peter');
+$view = [
+    'greeting' => $hello->hello('peter'),
+    'host' => getenv('EC2_HOST'),
+];
 
-echo "\n<br><br>\n";
-echo getenv('EC2_HOST');
-echo "\n<br>I am in (not) York Region<br>";
-echo "Hi Bob";
+?>
+
+<html>
+  <head>
+    <title>Jenkins Demo</title>
+  </head>
+  <body>
+    <h1><?= $view['greeting'] ?></h1>
+    <div class="host"><?= $view['host'] ?></div>
+  </body>
+</html>

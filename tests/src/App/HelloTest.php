@@ -19,4 +19,11 @@ class HelloTest extends TestCase
             $this->subject->hello('peter')
         );
     }
+
+    public function testDateTime() {
+        $this->assertEquals(
+            '2017-01-02',
+            $this->subject->datetime('2017-02-01')
+        );
+    }
 }

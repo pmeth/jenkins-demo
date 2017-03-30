@@ -3,12 +3,11 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 $hello = new App\Hello();
-$date = new DateTime('next week');
 
 $view = [
     'greeting' => $hello->hello('peter'),
     'host' => getenv('EC2_HOST'),
-    'date' => $date->format('Y-m-d'),
+    'date' => $hello->datetime('next week'),
 ];
 
 ?>

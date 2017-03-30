@@ -22,7 +22,7 @@ class HelloTest extends TestCase
 
     public function testDateTime() {
         $this->assertEquals(
-            '2017-01-02',
+            '2017-02-01',
             $this->subject->datetime('2017-02-01')
         );
     }
